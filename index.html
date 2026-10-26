@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sono e Desempenho Escolar — Maratona Tech 2026</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<span class="tag">Maratona Tech 2026 | Fase 2 | Nível 3</span>
+<h1>Sono e Desempenho Escolar</h1>
+<p>Investigamos se existe associação entre quantas horas os estudantes dormem por noite e a frequência com que relatam dificuldade de concentração nos estudos.</p>
+</div></header>
+
+<main class="wrap">
+<section class="card noprint" aria-labelledby="t-imp" style="margin-top:-24px">
+<h2 id="t-imp">Importar respostas</h2>
+<div class="row">
+<input id="file" type="file" accept=".csv,text/csv" hidden>
+<button class="primary" id="btnImp">Importar respostas</button>
+<button id="btnExp">Exportar resumo (CSV)</button>
+<button id="btnPrint">Imprimir / salvar PDF</button>
+</div>
+<p style="font-size:14px;color:var(--muted);margin:10px 0 0">Selecione o CSV exportado do Google Planilhas (Arquivo → Fazer download → CSV). O arquivo é lido somente neste navegador; nada é enviado para a internet. Uma nova importação substitui os dados anteriores.</p>
+<div id="status" role="status" aria-live="polite"></div>
+</section>
+
+<section class="card noprint" aria-labelledby="t-fil">
+<h2 id="t-fil">Filtros</h2>
+<div class="row">
+<label>Série<select id="fS"></select></label>
+<label>Faixa de sono<select id="fSl"></select></label>
+<label>Dificuldade de concentração<select id="fC"></select></label>
+<button id="btnClear">Limpar filtros</button>
+</div>
+</section>
+<p id="active" style="font-size:14px;color:var(--muted)"></p>
+
+<section aria-labelledby="t-kpi"><h2 id="t-kpi">Indicadores</h2>
+<div class="grid g4" id="kpis"></div>
+<p style="font-size:13px;color:var(--muted)">Os números representam apenas as respostas dos participantes desta pesquisa, não todos os estudantes.</p>
+<div class="card" style="margin-top:12px"><b>Meta da atividade: 20 respostas válidas</b>
+<div class="bar" style="margin:8px 0"><i id="goalBar" style="width:0"></i></div><span id="goalTxt"></span></div>
+</section>
+
+<section aria-labelledby="t-gr"><h2 id="t-gr">Gráficos</h2>
+<div class="grid g2">
+<div class="card"><h3 style="margin:0">Quantas horas os estudantes dormem?</h3><div id="ch1"></div></div>
+<div class="card"><h3 style="margin:0">Frequência da dificuldade de concentração</h3><div id="ch2"></div></div>
+</div>
+<div class="card" style="margin-top:16px"><h3 style="margin:0">Faixas de sono e dificuldade de concentração</h3>
+<p style="font-size:13px;color:var(--muted);margin:4px 0">Percentuais calculados dentro de cada faixa de sono (apenas respostas que informaram sono e concentração). n = respostas do grupo.</p>
+<div id="ch3"></div></div>
+</section>
+
+<section class="card" aria-labelledby="t-an"><h2 id="t-an">Análise dos dados</h2><div id="analysis"></div></section>
+
+<section class="card" aria-labelledby="t-hip"><h2 id="t-hip">Verificação da hipótese</h2>
+<p><i>“Estudantes que dormem menos horas tendem a relatar mais dificuldade de concentração durante os estudos.”</i></p>
+<div id="hyp"></div>
+<details><summary>Critérios da classificação</summary>
+<p style="font-size:14px">Compara-se quem dorme menos de 7 horas com quem dorme 7 horas ou mais, usando só respostas com sono e concentração informados e os filtros ativos. É inconclusivo se houver menos de 20 respostas nessa comparação ou menos de 5 em algum dos grupos. Caso contrário: diferença de +10 pontos percentuais ou mais na proporção “Frequentemente/Sempre” entre os que dormem menos = compatível; −10 pontos ou menos = não apoia; entre os dois = inconclusivo.</p></details>
+<div class="msg warn">Esta pesquisa observa percepções autorrelatadas e possíveis associações. Ela não comprova, por si só, que a quantidade de sono cause diretamente diferenças de concentração ou rendimento escolar.</div>
+</section>
+
+<section class="card" aria-labelledby="t-met"><h2 id="t-met">Metodologia, questionário e privacidade</h2>
+<p style="font-size:14px">Coleta pelo Google Forms, “Pesquisa sobre Sono e Desempenho Escolar”. A participação é voluntária e anônima, para fins educacionais, com resultados agrupados. Este site não gera respostas: só mostra o que for importado.</p>
+<details><summary>Questionário oficial</summary>
+<ol style="font-size:14px">
+<li>Você concorda em participar da pesquisa? (Sim, concordo / Não concordo)</li>
+<li>Em qual série do Ensino Médio você está? (1º, 2º, 3º ano / Outro / Prefiro não informar)</li>
+<li>Em média, quantas horas você dorme por noite? (Menos de 5 / 5 a menos de 6 / 6 a menos de 7 / 7 a 8 / Mais de 8 / Prefiro não informar)</li>
+<li>Como você avalia a qualidade do seu sono? (Muito ruim … Muito boa / Prefiro não informar)</li>
+<li>Com que frequência você sente dificuldade para se concentrar nos estudos por causa do sono ou do cansaço? (Nunca … Sempre / Prefiro não informar)</li>
+<li>Como você avalia seu rendimento escolar atualmente? (Muito ruim … Muito bom / Prefiro não informar)</li>
+<li>Você costuma usar telas na última hora antes de dormir? (Sim / Não / Às vezes / Prefiro não informar)</li></ol></details>
+<details><summary>Privacidade (LGPD)</summary>
+<p style="font-size:14px">Não são coletados nomes, e-mails ou telefones. Os arquivos são processados localmente, sem envio a servidores. Tirar o nome não garante anonimato se houver outros dados identificáveis. Se houver menores de idade entre os participantes, valide com o professor as orientações de consentimento e proteção de dados antes da coleta. Ao publicar, mostre apenas resultados agregados e cuidado com grupos muito pequenos.</p></details>
+<p id="crit" style="font-size:13px;color:var(--muted)">Cálculos: “Prefiro não informar” fica fora do denominador da pergunta correspondente; percentuais são arredondados.</p>
+</section>
+<footer>Maratona Tech 2026 · Projeto educacional · Dados processados localmente</footer>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
